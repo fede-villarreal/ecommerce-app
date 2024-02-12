@@ -1,16 +1,19 @@
-import { StyleSheet, View, Text } from 'react-native'
-import colors from '../utils/global/colors.js'
-import { toCapitalCase } from '../utils/utils.js'
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import colors from '../utils/global/colors.js';
+import { toCapitalCase } from '../utils/utils.js';
+import fonts from '../utils/global/fonts.js';
 
-const CategoryCard = ({ item }) => {
+const CategoryCard = ({ item, selectCategory }) => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>{toCapitalCase(item)}</Text>
-        </View>
-    )
-}
+        <Pressable onPress={() => selectCategory(item)}>
+            <View style={styles.container}>
+                <Text style={styles.text}>{toCapitalCase(item)}</Text>
+            </View>
+        </Pressable>
+    );
+};
 
-export default CategoryCard
+export default CategoryCard;
 
 const styles = StyleSheet.create({
     container: {
@@ -24,7 +27,8 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     text: {
-        fontSize: 15,
-        color: colors.text
+        fontSize: 20,
+        color: colors.text,
+        fontFamily: fonts.subtitle
     }
-})
+});
