@@ -4,10 +4,10 @@ import Categories from '../components/Categories.jsx';
 
 const Home = ({selectCategory}) => {
     return (
-        <View>
+        <>
             <Header title='Home'/>
             <Categories selectCategory={selectCategory}/>
-        </View>
+        </>
     );
 };
 

@@ -5,7 +5,6 @@ import CategoryCard from './CategoryCard.jsx';
 const Categories = ({ selectCategory }) => {
     return (
         <FlatList
-            style={styles.list}
             data={categories}
             keyExtractor={item => item}
             renderItem={({ item }) => (
@@ -17,8 +16,4 @@ const Categories = ({ selectCategory }) => {
 
 export default Categories;
 
-const styles = StyleSheet.create({
-    list: {
-        marginBottom: 100
-    }
-});
+const styles = StyleSheet.create({});

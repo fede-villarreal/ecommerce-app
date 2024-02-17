@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import Header from '../components/Header.jsx';
-import products from '../utils/data/products.json';
 import ItemCategoryCard from '../components/ItemCategoryCard.jsx';
 import SearchBar from '../components/SearchBar.jsx';
+import products from '../utils/data/products.json';
 
-const ItemsCategory = ({ categorySelected }) => {
+const ItemsCategory = ({ categorySelected, selectItemId }) => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [searchedWord, setSearchedWord] = useState('');
 
@@ -35,7 +35,7 @@ const ItemsCategory = ({ categorySelected }) => {
                 data={filteredItems}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                    <ItemCategoryCard item={item} />
+                    <ItemCategoryCard item={item} selectItemId={selectItemId} />
                 )}
             />
         </>

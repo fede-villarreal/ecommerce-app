@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, BackHandler } from 'react-native';
+import { StyleSheet, SafeAreaView, BackHandler, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import Home from './src/screens/Home.jsx';
 import ItemsCategory from './src/screens/ItemsCategory.jsx';
+import ItemDetail from './src/screens/ItemDetail.jsx';
 import colors from './src/utils/global/colors.js';
 import { fontCollection } from './src/utils/global/fonts.js';
 
 export default function App() {
-  const [fontsLoaded] = useFonts(fontCollection);
-  const [categorySelected, setCategorySelected] = useState('');
+  const [fontsLoaded] = useFonts(fontCollection)
+  const [categorySelected, setCategorySelected] = useState('')
+  const [itemId, setItemId] = useState(0)
 
   useEffect(() => {
     const backAction = () => {
+      if (itemId) {
+        setItemId(0);
+        return true;
+      }
       if (categorySelected) {
         setCategorySelected('');
         return true; // Evita que la aplicación se cierre
@@ -25,7 +31,7 @@ export default function App() {
     );
 
     return () => backHandler.remove();
-  }, [categorySelected]);
+  }, [categorySelected, itemId]);
 
   if (!fontsLoaded) return null;
 
@@ -33,13 +39,22 @@ export default function App() {
     setCategorySelected(category);
   };
 
+  const selectItemId = (id) => {
+    setItemId(id)
+  }
+
   return (
-    <View style={styles.container}>
-      {categorySelected
-        ? <ItemsCategory categorySelected={categorySelected} />
-        : <Home selectCategory={selectCategory} />
-      }
-    </View>
+    <>
+      <StatusBar backgroundColor={colors.primary}/>
+      <SafeAreaView style={styles.container}>
+        {itemId
+          ? <ItemDetail itemId={itemId} />
+          : categorySelected
+            ? <ItemsCategory categorySelected={categorySelected} selectItemId={selectItemId} />
+            : <Home selectCategory={selectCategory} />
+        }
+      </SafeAreaView>
+    </>
   );
 }
 
