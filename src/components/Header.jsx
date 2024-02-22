@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-import colors from '../utils/global/colors.js';
 import { toCapitalCase } from '../utils/utils.js';
+import colors from '../utils/global/colors.js';
 import fonts from '../utils/global/fonts.js';
 
 const Header = ({ title = "Ecommerce", styleHeaderItemDetail }) => {
+
+    const displayTitle = title.toString()
+
     return (
         <View style={[styles.container]}>
-            <Text style={[styles.text, styleHeaderItemDetail]}>{toCapitalCase(title)}</Text>
+            <Text style={[styles.text, styleHeaderItemDetail]}>{toCapitalCase(displayTitle)}</Text>
         </View>
     );
 };

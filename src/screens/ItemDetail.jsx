@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
-import Header from '../components/Header.jsx'
 import products from '../utils/data/products.json'
 import colors from '../utils/global/colors.js'
 import fonts from '../utils/global/fonts.js'
 
-const ItemDetail = ({ itemId }) => {
+const ItemDetail = ({ route }) => {
+
+    const {itemId} = route.params
 
     const [product, setProduct] = useState({})
 
@@ -16,7 +17,6 @@ const ItemDetail = ({ itemId }) => {
 
     return (
         <View style={styles.container}>
-            <Header title={product.title} styleHeaderItemDetail={styles.headerItemDetail} />
             <View style={styles.content} >
                 <Image
                     style={styles.image}
@@ -46,9 +46,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "start",
         alignItems: "center"
-    },
-    headerItemDetail: {
-        fontSize: 30,
     },
     content: {
         width: "100%"

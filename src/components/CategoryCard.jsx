@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import colors from '../utils/global/colors.js';
 import { toCapitalCase } from '../utils/utils.js';
+import colors from '../utils/global/colors.js';
 import fonts from '../utils/global/fonts.js';
 
-const CategoryCard = ({ item, selectCategory }) => {
+const CategoryCard = ({ item, navigation }) => {
     return (
-        <Pressable onPress={() => selectCategory(item)}>
+        <Pressable onPress={() => navigation.navigate('ItemsCategory', {categorySelected: item})}>
             <View style={styles.container}>
                 <Text style={styles.text}>{toCapitalCase(item)}</Text>
             </View>
