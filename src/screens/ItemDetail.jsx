@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { addItem } from '../features/cartCounter/cartCounterSlice.js'
 import products from '../utils/data/products.json'
 import colors from '../utils/global/colors.js'
 import fonts from '../utils/global/fonts.js'
 
 const ItemDetail = ({ route }) => {
+
+    const dispatch = useDispatch()
 
     const {itemId} = route.params
 
@@ -29,8 +33,8 @@ const ItemDetail = ({ route }) => {
                 </View>
                 <View style={styles.containerPrice} >
                     <Text style={styles.price}>$ {product.price}</Text>
-                    <Pressable style={styles.buyNow}>
-                        <Text style={styles.buyNowText}>Buy Now</Text>
+                    <Pressable style={styles.buyNow} onPress={() => dispatch(addItem(product))}>
+                        <Text style={styles.buyNowText}>Añadir al carrito</Text>
                     </Pressable>
                 </View>
             </View>

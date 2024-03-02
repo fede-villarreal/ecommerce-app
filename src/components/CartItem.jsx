@@ -1,17 +1,26 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { deleteItem } from '../features/cartCounter/cartCounterSlice.js'
 import { Entypo } from '@expo/vector-icons'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
 
 const CartItem = ({ item }) => {
+
+    const dispatch = useDispatch()
+
     return (
         <View style={styles.card}>
             <View style={styles.textContainer}>
                 <Text style={styles.text}>{item.title}</Text>
                 <Text style={styles.text2}>{item.brand}</Text>
-                <Text style={styles.text2}>$ {item.price}</Text>
+                <Text style={styles.text2}>Precio: ${item.price}</Text>
+                <Text style={styles.text2}>Cantidad: {item.quantity}</Text>
+                <Text style={styles.text2}>Total: ${item.quantity * item.price}</Text>
             </View>
-            <Entypo name="trash" size={30} color={colors.text} />
+            <Pressable onPress={() => dispatch(deleteItem(item.id))}>
+                <Entypo name="trash" size={30} color={colors.text} />
+            </Pressable>
         </View>
     )
 }
@@ -27,7 +36,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexDirection: "row",
         justifyContent: "space-between",
-        height: 100,
+        height: 120,
         alignItems: "center"
     },
     textContainer: {
