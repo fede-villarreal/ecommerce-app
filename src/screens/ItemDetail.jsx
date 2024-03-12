@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { addItem } from '../features/cartCounter/cartCounterSlice.js'
-import products from '../utils/data/products.json'
 import colors from '../utils/global/colors.js'
 import fonts from '../utils/global/fonts.js'
+import { useGetProductByIdQuery } from '../app/services/shop.js'
 
 const ItemDetail = ({ route }) => {
 
@@ -12,12 +11,9 @@ const ItemDetail = ({ route }) => {
 
     const {itemId} = route.params
 
-    const [product, setProduct] = useState({})
+    const {data: product, isLoading} = useGetProductByIdQuery(itemId)
 
-    useEffect(() => {
-        const productFinded = products.find(item => item.id === itemId)
-        setProduct(productFinded)
-    }, [itemId])
+    if(isLoading) return null
 
     return (
         <View style={styles.container}>
@@ -55,8 +51,8 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     image: {
-        width: "100%",
-        height: 300
+        width: "80%",
+        height: 200
     },
     containerText: {
         gap: 25,

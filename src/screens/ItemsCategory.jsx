@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import ItemCategoryCard from '../components/ItemCategoryCard.jsx';
 import SearchBar from '../components/SearchBar.jsx';
-import products from '../utils/data/products.json';
+import { useGetProductsByCategoryQuery } from '../app/services/shop.js';
 
 const ItemsCategory = ({ route, navigation }) => {
     const { categorySelected } = route.params;
@@ -11,23 +11,23 @@ const ItemsCategory = ({ route, navigation }) => {
 
     const handlerSearchedWord = (word) => setSearchedWord(word);
 
+    const {data: products} = useGetProductsByCategoryQuery(categorySelected)
+
     useEffect(() => {
-        let filteredProducts = products;
 
         if (categorySelected) {
-            filteredProducts = filteredProducts.filter(item => item.category === categorySelected);
+            setFilteredItems(products)
         }
 
         if (searchedWord) {
             const searchedWordLower = searchedWord.toLowerCase();
-            filteredProducts = filteredProducts.filter(item => item.title.toLowerCase().includes(searchedWordLower));
+            setFilteredItems(products.filter(item => item.title.toLowerCase().includes(searchedWordLower)));
         }
 
-        setFilteredItems(filteredProducts);
-    }, [categorySelected, searchedWord]);
+    }, [categorySelected, searchedWord, products]);
 
     return (
-        <>
+        <View style={styles.container}>
             <SearchBar handlerSearchedWord={handlerSearchedWord} />
             <FlatList
                 style={styles.list}
@@ -37,13 +37,16 @@ const ItemsCategory = ({ route, navigation }) => {
                     <ItemCategoryCard item={item} navigation={navigation} />
                 )}
             />
-        </>
+        </View>
     );
 };
 
 export default ItemsCategory;
 
 const styles = StyleSheet.create({
+    container: {
+        height: '85%',
+    },
     list: {
         marginBottom: 10
     }
