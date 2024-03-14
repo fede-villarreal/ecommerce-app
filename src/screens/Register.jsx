@@ -5,6 +5,7 @@ import InputForm from '../components/InputForm'
 import SubmitButton from '../components/SubmitButton'
 import { useRegisterMutation } from '../app/services/auth'
 import { setUser } from '../features/auth/authSlice'
+import { registerSchema } from '../utils/validations/authSchema.js'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
 
@@ -14,12 +15,35 @@ const Register = ({ navigation }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [errorEmail, setErrorEmail] = useState("")
+    const [errorPassword, setErrorPassword] = useState("")
+    const [errorConfirmPassword, setErrorConfirmPassword] = useState("")
     const [triggerRegister] = useRegisterMutation()
 
 
     const onSubmit = async () => {
-        const { data } = await triggerRegister({ email, password })
-        dispatch(setUser({ email: data.email, idToken: data.idToken }))
+        try {
+            registerSchema.validateSync({ email, password, confirmPassword })
+            const { data } = await triggerRegister({ email, password })
+            dispatch(setUser({ email: data.email, idToken: data.idToken, localId: data.localId }))
+        } catch (error) {
+            setErrorEmail("")
+            setErrorPassword("")
+            setErrorConfirmPassword("")
+            switch (error.path) {
+                case "email":
+                    setErrorEmail(error.message)
+                    break
+                case "password":
+                    setErrorPassword(error.message)
+                    break
+                case "confirmPassword":
+                    setErrorConfirmPassword(error.message)
+                    break
+                default:
+                    break
+            }
+        }
     }
 
     return (
@@ -30,21 +54,21 @@ const Register = ({ navigation }) => {
                     value={email}
                     onChangeText={(t) => setEmail(t)}
                     isSecure={false}
-                    error=""
+                    error={errorEmail}
                 />
                 <InputForm
                     label="Password"
                     value={password}
                     onChangeText={(t) => setPassword(t)}
                     isSecure={true}
-                    error=""
+                    error={errorPassword}
                 />
                 <InputForm
                     label="Confirmar Password"
                     value={confirmPassword}
                     onChangeText={(t) => setConfirmPassword(t)}
                     isSecure={true}
-                    error=""
+                    error={errorConfirmPassword}
                 />
                 <SubmitButton onPress={onSubmit} title="Registrarme" />
                 <Text style={styles.sub}>¿Ya tienes una cuenta?</Text>

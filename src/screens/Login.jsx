@@ -5,6 +5,7 @@ import InputForm from '../components/InputForm'
 import SubmitButton from '../components/SubmitButton'
 import { useLoginMutation } from '../app/services/auth'
 import { setUser } from '../features/auth/authSlice'
+import { loginSchema } from '../utils/validations/authSchema.js'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
 
@@ -13,11 +14,29 @@ const Login = ({ navigation }) => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [errorEmail, setErrorEmail] = useState("")
+    const [errorPassword, setErrorPassword] = useState("")
     const [triggerLogin] = useLoginMutation()
 
     const onSubmit = async () => {
-        const { data } = await triggerLogin({ email, password })
-        dispatch(setUser({ email: data.email, idToken: data.idToken }))
+        try {
+            loginSchema.validateSync({ email, password })
+            const { data } = await triggerLogin({ email, password })
+            dispatch(setUser({ email: data.email, idToken: data.idToken, localId: data.localId }))
+        } catch (error) {
+            setErrorEmail("")
+            setErrorPassword("")
+            switch (error.path) {
+                case "email":
+                    setErrorEmail(error.message)
+                    break
+                case "password":
+                    setErrorPassword(error.message)
+                    break
+                default:
+                    break
+            }
+        }
     }
 
     return (
@@ -28,14 +47,14 @@ const Login = ({ navigation }) => {
                     value={email}
                     onChangeText={(t) => setEmail(t)}
                     isSecure={false}
-                    error=""
+                    error={errorEmail}
                 />
                 <InputForm
                     label="Password"
                     value={password}
                     onChangeText={(t) => setPassword(t)}
                     isSecure={true}
-                    error=""
+                    error={errorPassword}
                 />
                 <SubmitButton onPress={onSubmit} title="Iniciar Sesion" />
                 <Text style={styles.sub}>¿No tienes una cuenta?</Text>
