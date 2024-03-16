@@ -1,13 +1,13 @@
-import { useState } from 'react'
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import { useDispatch } from 'react-redux'
 import InputForm from '../components/InputForm'
 import SubmitButton from '../components/SubmitButton'
-import { useRegisterMutation } from '../app/services/auth'
-import { setUser } from '../features/auth/authSlice'
-import { registerSchema } from '../utils/validations/authSchema.js'
+import { useState } from 'react'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
+import { useRegisterMutation } from '../app/services/auth'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../features/auth/authSlice'
+import { registerSchema } from '../utils/validations/authSchema'
 
 const Register = ({ navigation }) => {
 
@@ -71,7 +71,7 @@ const Register = ({ navigation }) => {
                     error={errorConfirmPassword}
                 />
                 <SubmitButton onPress={onSubmit} title="Registrarme" />
-                <Text style={styles.sub}>¿Ya tienes una cuenta?</Text>
+                <Text style={styles.sub}>ya tenes una cuenta?</Text>
                 <Pressable onPress={() => navigation.navigate("Login")} >
                     <Text style={styles.subLink}>Incio de sesion</Text>
                 </Pressable>
@@ -79,8 +79,8 @@ const Register = ({ navigation }) => {
         </View>
     )
 }
-
 export default Register
+
 
 const styles = StyleSheet.create({
     main: {
