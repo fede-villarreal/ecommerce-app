@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ShopStack from './ShopStack.jsx'
 import CartStack from './CartStack.jsx'
 import OrdersStack from './OrdersStack.jsx'
+import ProfileStack from './ProfileStack.jsx'
 import TabBarIcon from '../components/TabBarIcon.jsx'
 import colors from '../utils/global/colors.js'
 
@@ -32,6 +33,11 @@ const TabNavigator = () => {
             <Tab.Screen name='OrdersStack' component={OrdersStack}
                 options={{
                     tabBarIcon: ({ focused }) => <TabBarIcon title='Ordenes' iconName='list' focused={focused} />
+                }}
+            />
+            <Tab.Screen name='ProfileStack' component={ProfileStack}
+                options={{
+                    tabBarIcon: ({ focused }) => <TabBarIcon title='Perfil' iconName='user' focused={focused} />
                 }}
             />
         </Tab.Navigator>

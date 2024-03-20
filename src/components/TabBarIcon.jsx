@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     containerFocused: {
         alignItems: 'center',
         borderRadius: 50,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         paddingVertical: 5,
         borderColor: colors.secondary,
         borderWidth: 2
