@@ -1,17 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, FlatList } from 'react-native'
 import { Feather } from "@expo/vector-icons"
+import OrderItemDetail from './OrderItemDetail.jsx'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
 
 const OrderItem = ({ order }) => {
 
+    const items = order.items
+
     return (
         <View style={styles.card}>
             <View style={styles.textContainer}>
-                <Text style={styles.text}>
-                    {new Date(order.createdAt).toLocaleString()}
-                </Text>
-                <Text style={styles.text2}>$ {order.total}</Text>
+                <Text style={styles.text}>{order.createdAt}</Text>
+                <FlatList
+                    data={items}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => <OrderItemDetail item={item} />}
+                />
+                <Text style={styles.text2}>Total: ${order.total}</Text>
             </View>
             <Feather name="search" size={30} color={colors.text} />
         </View>
@@ -29,7 +35,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         flexDirection: "row",
         justifyContent: "space-between",
-        height: 100,
+        height: 'auto',
         alignItems: "center"
     },
     textContainer: {

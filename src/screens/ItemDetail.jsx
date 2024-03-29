@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { addItem } from '../features/cartCounter/cartCounterSlice.js'
+import { addCartItem } from '../features/cart/cartSlice.js'
+import { useGetProductByIdQuery } from '../app/services/shop.js'
 import colors from '../utils/global/colors.js'
 import fonts from '../utils/global/fonts.js'
-import { useGetProductByIdQuery } from '../app/services/shop.js'
 
 const ItemDetail = ({ route }) => {
 
@@ -29,7 +29,7 @@ const ItemDetail = ({ route }) => {
                 </View>
                 <View style={styles.containerPrice} >
                     <Text style={styles.price}>$ {product.price}</Text>
-                    <Pressable style={styles.buyNow} onPress={() => dispatch(addItem(product))}>
+                    <Pressable style={styles.buyNow} onPress={() => dispatch(addCartItem(product))}>
                         <Text style={styles.buyNowText}>Añadir al carrito</Text>
                     </Pressable>
                 </View>

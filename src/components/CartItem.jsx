@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { deleteItem } from '../features/cartCounter/cartCounterSlice.js'
+import { deleteCartItem } from '../features/cart/cartSlice.js'
 import { Entypo } from '@expo/vector-icons'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
@@ -18,7 +18,7 @@ const CartItem = ({ item }) => {
                 <Text style={styles.text2}>Cantidad: {item.quantity}</Text>
                 <Text style={styles.text2}>Total: ${item.quantity * item.price}</Text>
             </View>
-            <Pressable onPress={() => dispatch(deleteItem(item.id))}>
+            <Pressable onPress={() => dispatch(deleteCartItem(item.id))}>
                 <Entypo name="trash" size={30} color={colors.text} />
             </Pressable>
         </View>
