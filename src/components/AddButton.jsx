@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         margin: 10
     },
     text: {
-        color: colors.text,
         textAlign: "center",
         fontSize: 18
     }
