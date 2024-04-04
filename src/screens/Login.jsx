@@ -8,6 +8,7 @@ import { setUser } from '../features/auth/authSlice'
 import { loginSchema } from '../utils/validations/authSchema.js'
 import colors from '../utils/global/colors'
 import fonts from '../utils/global/fonts'
+import { deleteSession, insertSession } from '../utils/db/index.js'
 
 const Login = ({ navigation }) => {
 
@@ -22,6 +23,8 @@ const Login = ({ navigation }) => {
         try {
             loginSchema.validateSync({ email, password })
             const { data } = await triggerLogin({ email, password })
+            deleteSession()
+            insertSession(data)
             dispatch(setUser({ email: data.email, idToken: data.idToken, localId: data.localId }))
         } catch (error) {
             setErrorEmail("")
@@ -86,12 +89,12 @@ const styles = StyleSheet.create({
     sub: {
         fontSize: 15,
         fontFamily: fonts.subtitle,
-        marginTop: 20
+        marginTop: 20,
+        color: colors.text,
     },
     subLink: {
         fontSize: 15,
         fontFamily: fonts.text,
-        color: colors.text,
         padding: 10,
         borderRadius: 5,
         backgroundColor: colors.secondary

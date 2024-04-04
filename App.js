@@ -6,6 +6,9 @@ import { store } from './src/app/store.js';
 import Navigator from './src/navigation/Navigator.jsx';
 import colors from './src/utils/global/colors.js';
 import { fontCollection } from './src/utils/global/fonts.js';
+import { init } from './src/utils/db/index.js';
+
+init()
 
 export default function App() {
   const [fontsLoaded] = useFonts(fontCollection)

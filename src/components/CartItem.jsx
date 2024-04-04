@@ -19,7 +19,7 @@ const CartItem = ({ item }) => {
                 <Text style={styles.text2}>Total: ${item.quantity * item.price}</Text>
             </View>
             <Pressable onPress={() => dispatch(deleteCartItem(item.id))}>
-                <Entypo name="trash" size={30} color={colors.text} />
+                <Entypo name="trash" size={30} />
             </Pressable>
         </View>
     )
@@ -43,12 +43,10 @@ const styles = StyleSheet.create({
         width: "70%"
     },
     text: {
-        color: colors.text,
         fontSize: 19,
         fontFamily: fonts.subtitle
     },
     text2: {
-        color: colors.text,
         fontSize: 14,
         fontFamily: fonts.text
     }

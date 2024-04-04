@@ -8,6 +8,7 @@ import { useRegisterMutation } from '../app/services/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
 import { registerSchema } from '../utils/validations/authSchema'
+import { deleteSession, insertSession } from '../utils/db/index.js'
 
 const Register = ({ navigation }) => {
 
@@ -25,6 +26,8 @@ const Register = ({ navigation }) => {
         try {
             registerSchema.validateSync({ email, password, confirmPassword })
             const { data } = await triggerRegister({ email, password })
+            deleteSession()
+            insertSession(data)
             dispatch(setUser({ email: data.email, idToken: data.idToken, localId: data.localId }))
         } catch (error) {
             setErrorEmail("")
@@ -71,7 +74,7 @@ const Register = ({ navigation }) => {
                     error={errorConfirmPassword}
                 />
                 <SubmitButton onPress={onSubmit} title="Registrarme" />
-                <Text style={styles.sub}>ya tenes una cuenta?</Text>
+                <Text style={styles.sub}>¿Ya tienes una cuenta?</Text>
                 <Pressable onPress={() => navigation.navigate("Login")} >
                     <Text style={styles.subLink}>Incio de sesion</Text>
                 </Pressable>
@@ -100,12 +103,12 @@ const styles = StyleSheet.create({
     sub: {
         fontSize: 15,
         fontFamily: fonts.subtitle,
+        color: colors.text,
         marginTop: 20
     },
     subLink: {
         fontSize: 15,
         fontFamily: fonts.text,
-        color: colors.text,
         padding: 10,
         borderRadius: 5,
         backgroundColor: colors.secondary

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import fonts from '../utils/global/fonts'
+import colors from '../utils/global/colors.js'
 
 
 const InputForm = ({ label, value, onChangeText, isSecure, error }) => {
@@ -25,10 +26,11 @@ export default InputForm
 
 const styles = StyleSheet.create({
     inputContainer: {
-        width: "100%"
+        width: "100%",
     },
     input: {
         width: "90%",
+        color: colors.text,
         borderWidth: 0,
         borderBottomWidth: 3,
         borderBottomColor: "white",
@@ -42,7 +44,8 @@ const styles = StyleSheet.create({
         width: "90%",
         marginHorizontal: "5%",
         fontSize: 16,
-        fontFamily: fonts.subtitle
+        fontFamily: fonts.subtitle,
+        color: colors.text
     },
     error: {
         fontSize: 16,

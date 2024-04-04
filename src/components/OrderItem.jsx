@@ -19,7 +19,7 @@ const OrderItem = ({ order }) => {
                 />
                 <Text style={styles.text2}>Total: ${order.total}</Text>
             </View>
-            <Feather name="search" size={30} color={colors.text} />
+            <Feather name="search" size={30} />
         </View>
     )
 }
@@ -44,11 +44,9 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 17,
         fontFamily: fonts.text,
-        color: colors.text
     },
     text2: {
         fontSize: 19,
         fontFamily: fonts.text,
-        color: colors.text
     }
 })

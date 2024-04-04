@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     buyNowText: {
-        color: colors.text,
         fontSize: 18
     }
 })
