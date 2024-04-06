@@ -2,18 +2,23 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { addCartItem } from '../features/cart/cartSlice.js'
 import { useGetProductByIdQuery } from '../app/services/shop.js'
+import LoadingSpinner from '../components/LoadingSpinner.jsx'
+import ErrorMessage from '../components/ErrorMessage.jsx'
+import EmptyListComponent from '../components/EmptyListComponent.jsx'
 import colors from '../utils/global/colors.js'
 import fonts from '../utils/global/fonts.js'
 
-const ItemDetail = ({ route }) => {
+const ItemDetail = ({ navigation, route }) => {
 
     const dispatch = useDispatch()
 
-    const {itemId} = route.params
+    const { itemId } = route.params
 
-    const {data: product, isLoading} = useGetProductByIdQuery(itemId)
+    const { data: product, isLoading, isError, isSuccess } = useGetProductByIdQuery(itemId)
 
-    if(isLoading) return null
+    if (isLoading) return <LoadingSpinner />
+    if (isError) return <ErrorMessage message="¡Ups! Algo salió mal." textButton="Volver" onRetry={() => navigation.goBack()} />
+    if (isSuccess && product === null) return <EmptyListComponent message="El producto no esta disponible" />
 
     return (
         <View style={styles.container}>
